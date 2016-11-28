@@ -1,6 +1,6 @@
 # php-oop
 
-<p>Este repositorio es un repositorio que usaré para seguir el curso de POO de <a href="https://styde.net/por-que-necesitamos-clases-y-objetos-php/" target="_blank">https://styde.net/por-que-necesitamos-clases-y-objetos-php/</a>
+<p>Este repositorio es un repositorio que usaré para seguir el curso de POO de Styde. Aquí en enlace del curso: <a href="https://styde.net/por-que-necesitamos-clases-y-objetos-php/" target="_blank">https://styde.net/por-que-necesitamos-clases-y-objetos-php/</a>
 </p>
 
 <h3>¿Por qué estoy realizando este curso?</h3>
