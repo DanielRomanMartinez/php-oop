@@ -34,8 +34,8 @@ echo $nokia->color; // Imprimirá Blanco
 
 class Person
 {
-    var $firstName;
-    var $lastName;
+    public $firstName;
+    public $lastName;
 
     function __construct($firstName, $lastName)
 	{
