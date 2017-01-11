@@ -1,5 +1,15 @@
 <?php
 
+/*
+	Protected Vs Privated Vs Public.
+	-------------------------------
+	Public hace que la variable/función se pueda acceder desde cualquier lugar, como por ejemplo otras clases y otras instancias de esa misma clase.
+
+	Private hace que la variable/función solamente se pueda utilizar desde la misma clase que las define.
+
+	Protected hace que la variable/función se puede acceder desde la clase que las define y también desde cualquier otra clase que herede de ella.
+*/
+
 class Person
 {
     protected $firstName;
