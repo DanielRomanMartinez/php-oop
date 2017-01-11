@@ -83,7 +83,7 @@ class Person
 	public function getAge(){
 		$date = explode("/", $this->birthday);
 		$years = date('Y')-$date[2];
-		if($date[0]>date('d') && $date[1]>date('m')){
+		if($date[0]>date('d') && $date[1]>=date('m')){
 			$years--;
 		}
 
@@ -105,7 +105,7 @@ $person1->setBirthday('18/08/1990');
 echo "{$person1->getFirstName()} ";
 echo "{$person1->getLastName()}  ";
 echo "{$person1->getNickname()} <br>";
-echo "{$person1->getAge()}"
+echo "{$person1->getAge()}";
 
 //echo "{$person1->getFullName()} es amigo de {$person2->getFullName()}<br>";
 
