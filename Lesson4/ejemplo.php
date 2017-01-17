@@ -1,35 +1,74 @@
 <?php
 
-// Unit
-abstract class Unit {
+// Unit4 -- Min 6:01 -- https://styde.net/interaccion-entre-objetos/
+
+function show($message)
+{
+	echo "<p>$message</p>";
+}
+
+abstract class Unit 
+{
 	protected $alive = true;
+	protected $hp = 40;
 	protected $name;
 
-	public function __construct($name){
+	public function __construct($name)
+	{
 		$this->name = $name;
 	}
 
-	public function move($direction){
-		echo "<p>{$this->name} camina hacia $direction</p>";
+	public function move($direction)
+	{
+		show("{$this->name} camina hacia $direction");
 	}
 
-	abstract public function attack($opponent);
+	public function getName()
+	{
+		return $this->name;
+	}
+
+	public function setHp($points)
+	{
+		$this->hp = $points;
+	}
+
+	public function getHp()
+	{
+		return $this->hp;
+	}
+
+	abstract public function attack(Unit $opponent);
+
+	public function die()
+	{
+		show("{$this->name} muere");
+	}
 }
 
 // Soldier
-class Soldier extends Unit{
+class Soldier extends Unit
+{
 
-	public function attack($opponent){
-		echo "<p>{$this->name} corta a $opponent en 2</p>";	
+	public function attack(Unit $opponent)
+	{
+		show("{$this->name} corta a $opponent en 2");	
 	}
 }
 
 // Archer
-class Archer extends Unit{
-	public function attack($opponent){
-		echo "<p>{$this->name} dispara una flecha a $opponent</p>";
+class Archer extends Unit
+{
 
-		$opponent->die();
+	protected $damage = 20;
+
+	public function attack(Unit $opponent)
+	{
+		show("{$this->name} dispara una flecha a {$opponent->getName()	}"); 
+
+		$opponent->setHp($opponent->getHp() - $this->damage);
+
+		if($opponent->getHp() <=0) $opponent->die();
 	}
 }
 
@@ -42,11 +81,10 @@ echo "<hr>";
 
 $dk = new Soldier('Dani');
 $dk->move('Hacia el sud');
-$dk->attack('Ramm');
 
 echo "<hr>";
 
 $monica = new Archer('Monica');
-$monica->attack($monica);
-
+$monica->attack($dk);
+$monica->attack($dk);
 ?>
