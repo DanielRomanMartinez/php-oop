@@ -1,6 +1,20 @@
 <?php
 
-// Unit4 -- Min 6:01 -- https://styde.net/interaccion-entre-objetos/
+/*
+	Leccion para aprender padre e hijos, como heredar e interectuar entre diferentes clases.
+	Nota aprendida:
+	if($soldado instanceof  Soldier ){ echo 'Es un soldado'; }
+
+	Recuerda: 
+
+	Protected Vs Privated Vs Public.
+	-------------------------------
+	Public hace que la variable/función se pueda acceder desde cualquier lugar, como por ejemplo otras clases y otras instancias de esa misma clase.
+
+	Private hace que la variable/función solamente se pueda utilizar desde la misma clase que las define.
+
+	Protected hace que la variable/función se puede acceder desde la clase que las define y también desde cualquier otra clase que herede de ella.
+*/
 
 function show($message)
 {
@@ -26,12 +40,7 @@ abstract class Unit
 	public function getName()
 	{
 		return $this->name;
-	}
-
-	public function setHp($points)
-	{
-		$this->hp = $points;
-	}
+ 	}
 
 	public function getHp()
 	{
@@ -40,9 +49,22 @@ abstract class Unit
 
 	abstract public function attack(Unit $opponent);
 
+	public function takeDamage($damage){
+
+		$this->setHp($this->hp - $damage);
+
+		if($this->hp <=0) $this->die();
+	}
+
 	public function die()
 	{
 		show("{$this->name} muere");
+	}
+
+	private function setHp($points)
+	{
+		$this->hp = $points;
+		show("{$this->name} ahora tiene {$this->hp} puntos de vida");
 	}
 }
 
@@ -50,9 +72,18 @@ abstract class Unit
 class Soldier extends Unit
 {
 
+	protected $damage = 40;
+
 	public function attack(Unit $opponent)
 	{
-		show("{$this->name} corta a $opponent en 2");	
+		show("{$this->name} corta a {$opponent->getName()}");
+
+		$opponent->takeDamage($this->damage);
+	}
+
+	public function takeDamage($damage)
+	{
+		parent::takeDamage($damage / 2);
 	}
 }
 
@@ -66,25 +97,52 @@ class Archer extends Unit
 	{
 		show("{$this->name} dispara una flecha a {$opponent->getName()	}"); 
 
-		$opponent->setHp($opponent->getHp() - $this->damage);
+		$opponent->takeDamage($this->damage);
+	}
 
-		if($opponent->getHp() <=0) $opponent->die();
+	public function takeDamage($damage)
+	{
+		if(rand(0,1) == 1) return parent::takeDamage($damage);
 	}
 }
 
-/*
-$dk = new Unit('Dani');
-$dk->move('Hacia el sud');
-$dk->attack('Ramm');
-*/
-echo "<hr>";
+// Archer
+class MegaSoldier extends Unit
+{
+
+	protected $damage = 0;
+
+	public function attack(Unit $opponent)
+	{
+		show("{$this->name} ataca a {$opponent->getName()}"); 
+
+		$opponent->takeDamage($this->damage);
+	}
+
+	public function takeDamage($damage)
+	{
+		$damage = $damage/5;
+		$damage = number_format($damage, 2);
+		parent::takeDamage($damage);
+	}
+}
+
+// DK - Soldado con armadura normal
+// Monica - Arquera. De vez en cuando puede esquivar ataques
+// DK, despues de cansarse de que Monica le atacara, le ataca de nuevo. Monica sin embargo puede esquivar ataques de vez en cuando.
+// Mega Soldier. No ataca, y si ataca hace daño 0. Si le atacan, solo recibe una quinta parte (1/5) del daño.
 
 $dk = new Soldier('Dani');
 $dk->move('Hacia el sud');
 
-echo "<hr>";
 
 $monica = new Archer('Monica');
 $monica->attack($dk);
 $monica->attack($dk);
+
+$dk->attack($monica);
+
+$mega_soldier = new MegaSoldier('Mega Soldier');
+$dk->attack($mega_soldier);
+
 ?>
