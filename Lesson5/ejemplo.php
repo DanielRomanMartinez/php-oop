@@ -1,11 +1,9 @@
 <?php
 
 /*
-	Leccion para aprender padre e hijos, como heredar e interectuar entre diferentes clases.
+	Leccion para aprender interfaces y polimorfismo
 	
-	Nota aprendida:
-	if($soldado instanceof  Soldier ){ echo 'Es un soldado'; }
-
+	La palabra polimorfismo significa “múltiples formas” y en programación orientada a objetos puede tener varios significados, por ejemplo la habilidad que tiene un método dentro de un objeto con interactuar con diferentes objetos de diferentes clases de la misma forma pero con resultados diferentes. Esto se logra cuando creamos clases que tienen la misma interfaz (es decir los mismos métodos públicos) pero se comportan de manera diferente. 
 */
 
 function show($message)
@@ -68,7 +66,7 @@ class Soldier extends Unit
 
 	public function attack(Unit $opponent)
 	{
-		show("{$this->name} corta a {$opponent->getName()}");
+		show("{$this->name} corta con la espada a {$opponent->getName()}");
 
 		$opponent->takeDamage($this->damage);
 	}
@@ -78,6 +76,8 @@ class Soldier extends Unit
 		parent::takeDamage($damage / 2);
 	}
 }
+
+
 
 // Archer
 class Archer extends Unit
